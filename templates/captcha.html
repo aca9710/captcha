@@ -1,0 +1,172 @@
+{% if prueba == False %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Resuelve el CAPTCHA</title>
+    <style>
+        h1 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .fila-imagenes {
+            display: flex;
+            justify-content: left;
+            gap: 2px;
+            margin-bottom: 2px;
+        }
+
+        .celda-imagen {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            border: 3px solid #ddd;
+            transition: border-color 0.3s;
+        }
+
+        .celda-imagen:hover {
+            border-color: #aaa;
+        }
+
+        .celda-imagen.seleccionada {
+            border-color: #d60e07;
+        }
+
+        .imagen-principal {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .imagen-superpuesta {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 15px;
+            height: 15px;
+            display: none;
+        }
+
+        .celda-imagen.seleccionada .imagen-superpuesta {
+            display: block;
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #3082fd;
+        }
+    </style>
+</head>
+
+<body>
+
+    {% endif %}
+    
+    <div style=" display: flex; flex-direction: column; justify-content: center; align-items: center; 
+    
+    {% if prueba == True %}
+    margin-top : 10%;
+    {% endif %}
+    
+    ">
+        <div style="display: flex; flex-direction: column; justify-content: center; ">
+            <div style="margin-top: 20px;  background: rgb(15, 123, 156);color: white; -moz-border-radius: 5px 5px 5px; -webkit-border-radius: 5px 5px 5px; 
+                        border-radius: 5px 5px 0px 0px;
+                        padding-top: 2px;
+                        padding-left: 4px;
+                        {% if prueba == False %}
+                            width: 318px;
+                            height: 70px;
+                        {% else %}
+                            width: 305px;
+                            height: 60px;
+                        {% endif %} ">
+
+                {% if prueba == False %}
+                    <h5 style="margin-top: 3px;">Seleccione imágenes con:</h5>
+                    <h3 style="margin-top: 3px;">{{ texto }}</h3>
+                {% else %}
+                    <h7 style="margin-top: 3px;">Seleccione imágenes con:</h7>
+                    <h4 style="margin-top: 3px;">{{ texto }}</h4>
+                {% endif %}
+
+            </div>
+
+            {% for fila in captchas %}
+            <div class="fila-imagenes">
+                {% for columna in fila %}
+                <div class="celda-imagen" onclick="seleccionarImagen(this)" id="{{columna.id}}">
+                    <img src="{{columna.img}}" class="imagen-principal" alt="{{columna.id}}">
+                    <img src="{{okb64}}" class="imagen-superpuesta" alt="Selección">
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+
+            <input hidden type="text" name="seleccion" id="seleccion" value />
+            <input hidden type="text" name="seleccion" id="okb64" value="{{okb64}}" />
+            <input hidden type="text" name="serie" id="serie" value="{{serie}}" />
+            <input hidden type="text" name="ident" id="ident" value="{{ident}}" />
+            {% if prueba == False %}
+                <button onclick="enviasel();"> Verificar </button>
+            {% else %}
+                <div style="
+                 display: flex; flex-direction: row; justify-content: center; align-items: center; 
+                
+                ">
+                <button style="width: 104px;" onclick="enviasel();"> Verificar</button>
+                <input style="width: 118px; margin-left: 10px; margin-top: 30px;" readonly type="text" name="resultado" id="resultado"  value="Pendiente" />
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <script>
+        function seleccionarImagen(elemento) {
+            elemento.classList.toggle('seleccionada');
+        }
+        function enviasel() {
+            const seleccionadas = document.querySelectorAll('.celda-imagen.seleccionada');
+            var lista = '';
+            i = 0;
+            while (i < seleccionadas.length) {
+                lista = lista + seleccionadas[i].id.replace('v', '') + ',';
+                i = i + 1;
+            };
+            var fd = new FormData();
+
+            fd.append("serie", document.getElementById("serie").value);
+            fd.append("ident", document.getElementById("ident").value);
+            fd.append("seleccion", lista);
+
+            var y = new XMLHttpRequest();
+            y.onload = function () {
+                y.response = y.response.replace('\n', '');
+                document.querySelector('body').innerHTML = y.response;
+            };
+            y.open('POST', '/validar/');
+            y.send(fd);
+
+        };
+    </script>
+
+{% if prueba == False %}
+  
+</body>
+
+</html>
+{% endif %}

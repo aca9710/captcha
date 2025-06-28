@@ -1,0 +1,66 @@
+<div class="col-12 col-md " style="height: 621px; margin-top: 10px;">
+    <table class="table-sm table-condensed table-hover table-striped tabla1">
+        <thead>
+            <th colspan="1"> &nbsp;Nombres de captchas</th>
+            <th></th>
+
+            </thead>  
+        <tbody>   
+        {% for elemento in captchas %}
+        <tr style="background-color:{{elemento.color}};">
+           
+            <td id="{{ elemento.id }}" style="width: 98%; height: 26px;" onclick="rejillacaptcha('{{ elemento.id }}');" 
+            class="{% if elemento.id == idsel %} marcado {% endif %} text-left" name="lineas">{{ elemento.nombre }}
+            </td>
+
+            <td name="botonborrar" id="b{{ elemento.id }}" style="color:red;">
+                <a style="float: right !important;" cddlass="btn btn-default btn-xs  pull-left " onclick="borrarcaptcha('{{ elemento.id }}', '{{ paginator.number }}');">
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi-trash-fill"  viewBox="0 0 16 16">
+        <path id="bi-trash-fill" 
+        d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+    </svg>
+                
+                
+                
+                </a>
+            </td>
+
+        </tr>
+        {% endfor %}
+        </tbody> 
+    </table>
+</div>
+
+
+<nav style="vertical-align:bottom;" aria-label="">
+    <ul class="pagination">
+
+        <li class="page-item">
+            <a {% if paginator.has_previous %} onclick="seccion(0,'/listanombres/?pag=1','listanombres');" {% else %} disabled {% endif %} class="page-link rounded-pill"> <img src="{{ STATIC_URL }}img/skip-start-fill.svg"></a>
+        </li>
+        <li class="page-item">
+            <a {% if paginator.has_previous %} onclick="seccion('0','/listanombres/?pag={{ paginator.previous_page_number }}','listanombres');" {% else %} disabled {% endif %} class="page-link rounded-pill"> <img src="{{ STATIC_URL }}img/caret-left-fill.svg"></a>
+        </li>
+
+
+        <li class="page-item">
+            <a class="page-link rounded-pill" {% if paginator.has_next %} onclick="seccion('0','/listanombres/?pag={{ paginator.next_page_number }}','listanombres');" {% else %} disabled {% endif %}>
+                <img src="{{ STATIC_URL }}img/caret-right-fill.svg"></a>
+        </li>
+        <li class="page-item">
+            <a class="page-link rounded-pill" {% if paginator.has_next %} onclick="seccion('0','/listanombres/?pag={{ paginator.num_pages }}','listanombres');" {% else %} disabled {% endif %}>
+                <img src="{{ STATIC_URL }}img/skip-end-fill.svg"></a>
+        </li>
+
+        <li hidden class="page-item disabled "><a id="paginaactual" class="page-link  rounded-pill" href="/listanombres/?pag={{ paginator.num_pages }}">pag.
+                {{ paginator.number }} de {{ paginator.num_pages }}</a></li>
+        &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+        <li class="page-item">
+            <a class="page-link rounded-pill" onclick="nuevocaptcha();">
+                <img src="{{ STATIC_URL }}img/plus.svg"></a>
+        </li>
+
+    </ul>
+</nav>
+<input hidden name="pag" id="pag" type="text" value="{{ paginator.number }}">

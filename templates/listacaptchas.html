@@ -1,0 +1,237 @@
+<div class="col-3 col-md">
+    <div class="col-12 col-md">
+        <div class="table-sm">
+            <div class="Row">
+                <input class="form-control" style="width: 305px;" type="text" name="texto" id="idtexto">
+                <input hidden type="text" name="ncaptchag" id="ncaptchag">
+                <input hidden type="text" name="idcaptchag" id="iscaptchag">
+            </div>
+        </div>
+
+
+        <div class="table-sm ">
+            {% for fila in idfilas %}
+            <div class="Row">
+                {% for columna in fila %}
+                <div class="Cell" onclick="este('{{columna}}');">
+                    <img class="ok" src="{{ STATIC_URL }}img/ok.png">
+                    <img z-index="1" class="img" name="cuadro" src="{{ STATIC_URL }}img/cuadrado.png" id="{{columna}}">
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <label class="form-label">Nombre del captcha</label>
+        <input type="text" class="form-control is-valid" id="nombrecaptcha" value="" required>
+
+        <div class="table-sm ">
+            <div class="Row">
+                <div class="btn-toolbar">
+                    <div class="btn-group">
+                        <a style=" font-size: 21px;" class="adicionar btn btn-default btn-xs  pull-left "
+                           onclick="actualizar();">
+                            <span style="width: 25px; height: 25px; font-size: 18px;"
+                                  class="glyphicon glyphicon-floppy-disk" title=""></span>
+                        </a>
+
+                        <a style="margin-left:5px;  font-size: 21px;"
+                           class="adicionar btn btn-default btn-xs  pull-left " href="/captchajson/">
+                            json
+                        </a>
+                    </div>
+
+                </div>
+                <div class="Cell" id="idelem">
+
+
+                </div>
+                <div hidden class="Cell" id="_nombre2112"></div>
+                <div hidden class="Cell" id="_crc23e3"></div>
+            </div>
+            <div class="Row">
+                <div style=" padding-top: 5px; " class="Cell" id="idelem">
+                    <a style="padding-top: 5px; font-size: 12px;"
+                       class="adicionar btn btn-default btn-xs  pull-left " onclick="marca();">
+              <span style="width: 20px; height: 19px; font-size: 12px;" class="glyphicon glyphicon-tint" title="">
+                
+              </span></a><input class="immput" style=" height: 28px; font-size: 12px;" name="marcaagua" id="marcaagua"
+                                type="text" value="Datacimex">
+                    <a style="padding-top: 5px; font-size: 12px;" class="adicionar btn btn-default btn-xs "
+                       onclick="quitamarca();"><span style=" font-size: 14px;" class="glyphicon glyphicon-remove"
+                                                     title=""></span></a>
+                </div>
+                <div hidden class="Cell" id="nombre"></div>
+                <div hidden class="Cell" id="crc"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div hidden class="col-1 col-md ">
+    <div class="table-sm ">
+        <div class="Row">
+            <div class="Cell" onclick="este('00');"><a><img src="{{ STATIC_URL }}img/more.png" id="m00"></a></div>
+        </div>
+        <div class="Row">
+            <div class="Cell" onclick="este('00');"><a><img src="{{ STATIC_URL }}img/update.png" id="m01"></a></div>
+        </div>
+    </div>
+</div>
+<div class="col-4 col-md ">
+    <div class="col-12 col-md" style="height: 400px;">
+        <table class="table-sm   table-condensed table-hover table-striped tabla1">
+            <thead>
+
+            <th hidden style="width: 100px;"></th>
+            <th class=""> &nbsp;Nombre</th>
+            <th hidden> &nbsp;Selecci&oacute;n</th>
+            <th class=""> &nbsp;Texto</th>
+            <th></th>
+
+            </thead>
+            {% for elemento in captchas %}
+            <tr>
+                <td hidden><a class="adicionar btn btn-default btn-xs  pull-left "
+                              onclick="cambiaimagen('{{ elemento.nombre }}','{{ elemento.id }}');">
+                    <span style="width: 15px;" class="glyphicon glyphicon-arrow-left" title=""> </span> </a>
+                    <a style="margin-left: 8px;" class="adicionar btn btn-default btn-xs  pull-left "
+                       href="/duplicar/?nombre={{ elemento.nombre }}&pag={{ paginator.number }}">
+                        <span style="width: 15px;" class="glyphicon glyphicon-plus" title=""> </span> </a>
+                    <!--<a hidden class= "verde btn btn-default btn-xs  pull-left " onclick="editar('{{elemento.nombre}}','{{elemento.id}}');">
+      <span style ="width: 15px;" class="glyphicon glyphicon-pencil" title=""> </span> </a> -->
+
+
+                </td>
+                <td id="{{ elemento.nombre }}{{ elemento.id }}0"
+                    onclick="cambiaimagen('{{ elemento.nombre }}','{{ elemento.id }}');"
+                    class=" text-left">{{ elemento.nombre }}
+                </td>
+                <td hidden id="{{ elemento.nombre }}{{ elemento.id }}1"
+                    onclick="cambiaimagen('{{ elemento.nombre }}','{{ elemento.id }}');"
+                    class=" text-left">{{ elemento.activos }}
+                </td>
+                <td id="{{ elemento.nombre }}{{ elemento.id }}2"
+                    onclick="cambiaimagen('{{ elemento.nombre }}','{{ elemento.id }}');"
+                    class=" text-left">{{ elemento.texto }}
+                </td>
+                <td hidden onclick="cambiaimagen('{{ elemento.nombre }}',{{ elemento.id }});"
+                    class=" text-left"> &nbsp;&nbsp;{{ elemento.crc }}
+                </td>
+                <td><a style="float: right !important;" class="rojo btn btn-default btn-xs  pull-left "
+                       href="/borrar/?id={{ elemento.id }}&pag={{ paginator.number }}">
+                    <span style="width: 15px;" class="glyphicon glyphicon-trash" title=""> </span> </a></td>
+
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <ul class="col-12 col-md pager pull-right">
+        {% if paginator.has_previous %}
+        <li class="previous"><a href="/?pag=1">Inicio</a></li>
+        <li><a href="/?pag={{ paginator.previous_page_number }}">Anterior</a></li>
+        {% endif %}
+
+        {% if paginator.has_next %}
+        <li><a href="/?pag={{ paginator.next_page_number }}">Siguiente</a></li>
+        <li class=""><a href="/?pag={{ paginator.num_pages }}">Final</a></li>
+        {% endif %}
+        <li class="next  disabled contador"><a id="paginaactual" href="/?pag={{ paginator.number }}">
+            pag. {{ paginator.number }} de {{ paginator.num_pages }}</a>
+        <li>
+    </ul>
+    <input hidden name="pagina" id="pagina" type="text" value="{{ paginator.number }}">
+
+    <div id="prueba12342" class="col-12 col-md">
+
+        <div hidden id="modificarform" class="modal fade ">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button tabindex="-1" type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">Modificando nombre</h4>
+
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"></div>
+                        </div>
+
+                        <form action="/cambianombre/" method="post" id="Modificanombre">
+                            <fieldset>
+                                <input name="id" value="" type="hidden" id="formid">
+                                <input name="pag" value="{{ pag }}" type="hidden" id="pag">
+                                <div class="row">
+                                    <div class="col-3 text-right centradav">Nombre :</div>
+                                    <div class="col-7">
+                                        <input autofocus="True" name="nombre" id="formnombre" type="text"
+                                               class="form-control text-justify" value="" required>
+                                    </div>
+                                </div>
+                            </fieldset>
+                    </div>
+                    <div class="modal-footer">
+                        <button tabindex="8" type="button" class="btn btn-default" data-dismiss="modal">Cerrar
+                        </button>
+                        <button id="enviard" type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        <hr>
+                    </div>
+                    </form>
+                </div><!-- /.modal-content -->
+
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.id= "modificarform" -->
+    </div>
+
+
+</div>
+<div id="prueba" class="col-5 col-md ">
+
+</div>
+<div id="vborrado">
+    <div hidden id="borrarf" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <form action="/borrar_{{ nomenclador }}/" method="POST" id="Modificagrupos">
+                            <fieldset>
+                                <input hidden name="pag" id="pag" type="text" value="{{ paginator.number }}">
+                                <input name="id" value="" type="hidden" id="id_a_borrar">
+                                <div class="row">
+                                    <div class="col-12   text-center centradav">
+                                            <span class="text-center" name="id" value=""
+                                                  id="id_a_borrar_nombre"> </span>
+                                    </div>
+                                    <div class="col-12 text-center centradav">
+                                        <span class="text-center"> Esta seguro?</span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <div class="modal-footer">
+                                <button tabindex="8" type="button"
+                                        class="btn btn-default col-2 col-md-2 col-md-push-4"
+                                        data-dismiss="modal"> No
+                                </button>
+                                <button id="enviard" type="submit"
+                                        class="btn btn-primary  col-2 col-md-2 col-md-push-4"> Si
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-11 col-md-11 " style="font-size: 8px; text-align: right;">
+    <p></p>
+</div>
+</div>
+
+

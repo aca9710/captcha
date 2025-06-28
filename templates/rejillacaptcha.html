@@ -1,0 +1,37 @@
+
+
+
+<div class="Table" id="rejilla1"  style=" margin-top: 10px; margin-bottom: 12px; ">
+    {% for fila in rejilla%}
+    <div class="fila-imagenes">
+        {% for columna in fila %}
+        <div class="celda-imagenr {% if columna.id in seleccionado %} seleccionada {% endif %}" onclick="seleccionarImagen(this);" id="{{columna.id}}" name="edest">
+            <img class="imagen-principal" name="cuadro" src="{{columna.img}}" id="{{columna.id}}" >
+            <img class="imagen-superpuesta" src="{{ STATIC_URL }}img/ok.png" id="marca{{columna.id}}"  alt="Selección">
+            
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}    
+</div>
+<div class="Table" style=" margin-top: 10px;">
+    <div class="Row" style="margin-bottom: 1px;">
+        <label>Objeto a identificar en el captcha:</label>
+    </div>
+    <div class="Row" >
+        <input class="form-control" style="width: 305px;" type="text" name="idtexto" id="idtexto" value="{{texto}}">        
+        <input hidden name="seleccionado" id="seleccionado" type="text" value="{{seleccionado}}">
+        <input hidden name="idcaptcha" id="idcaptcha" type="text" value="{{id}}">
+    </div>
+</div>
+<div class="Table" style="margin-top:8px; margin-bottom: 1px;">
+    <div class="Row">
+        <label>Nombre del captcha</label>
+    </div>
+    <div class="Row" style="margin-top:0px; " >
+        <input type="text" class="form-control" style="width:300px;" id="guardarnombre" value="{{nombre}}" required>
+    </div>
+    <div class="Row">
+        <button id="enviard" class="btn btn-primary" onclick="guarda_captcha();">Guardar</button>
+    </div>
+</div>
