@@ -473,7 +473,7 @@ def importar(nombre_fichero, nombre_local):
 
 @app.route('/captchajson/', methods=['GET'])
 def expcaptchajson():
-    try:
+    if True:
         fcaptchas = open(os.path.join(os.path.dirname(__file__), 'listado.json'), 'r')
         data = fcaptchas.read()
         fcaptchas.close()
@@ -506,9 +506,9 @@ def expcaptchajson():
         newdic['activos'] = item['activos']
         newdic['texto'] = item['texto']
 
-    except Exception as e:
-        obt_traza().error(e)
-        item = ''
+    # except Exception as e:
+    #     obt_traza().error(e)
+    #     item = ''
     return jsonify(newdic)
 
 @app.route('/captcha/', methods=['GET'])
@@ -521,7 +521,7 @@ def expcaptcha():
 
 
 def obt_captcha(id):
-    try:
+    if True:
         _listado = obtener_listado()
         if _listado.existeid(id):
             nodo = _listado.nodo(id)
@@ -588,8 +588,8 @@ def obt_captcha(id):
 
         if not 'data:' in okb64:
                 okb64 = "data:image/png;base64," + okb64             
-    except Exception as e:
-        obt_traza().error(e)
+    # except Exception as e:
+    #     obt_traza().error(e)
 
     return render_template('captcha.html', STATIC_URL='/static/', serie=serie, ident=serie,
                            nombre=nodo['nombre'], texto=nodo['texto'], okb64=okb64, prueba=prueba, captchas=rejilla)
