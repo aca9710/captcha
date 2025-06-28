@@ -101,7 +101,7 @@
         >pag. {{ paginator.number }} de {{ paginator.num_pages }}</a
       >
     </li>
-    <li class="page-item">
+    <li class="page-item" {% if paginator.num_pages == 0 %} style="background-color: red;"{% endif %}>
       <label class="custom-file-upload page-link rounded-pill">
         <input
           type="file"

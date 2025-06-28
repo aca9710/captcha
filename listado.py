@@ -11,7 +11,12 @@ def id_alfagen(size=8, chars=string.ascii_uppercase + string.digits):
 class Listado():
 
     def __init__(self):
-        fcaptchas = open(os.path.join(os.path.dirname(__file__), 'listado.json'), 'r')
+        flistado = os.path.join(os.path.dirname(__file__), 'listado.json')
+        if not os.path.isfile(flistado):
+            fch = open(flistado, 'w')
+            fch.write('{}')
+            fch.close()
+        fcaptchas = open(flistado, 'r')
         listado = fcaptchas.read()
         fcaptchas.close()
         try:

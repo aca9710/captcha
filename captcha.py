@@ -656,7 +656,7 @@ def guarda_captcha():
 
 @app.route('/listacaptchas/', methods=['GET'])
 def nueva():
-    try:
+    if True:
         pag = request.args.get('pag', 1, type=int)
         _listado = obtener_listado()  
         listado, total = _listado.data()          
@@ -692,8 +692,8 @@ def nueva():
         principal = principal.replace('&&pruebacaptcha', captcha)
         
         return principal
-    except Exception as e:
-        obt_traza().error(e)
+    # except Exception as e:
+    #     obt_traza().error(e)
         return jsonify('error')
 
 def obt_rejillacaptcha(id):
