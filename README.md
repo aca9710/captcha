@@ -1,6 +1,6 @@
 # Generador de CAPTCHAs de Imágenes
 
-![Captcha Demo](static/img/ejCaptcha.png) 
+![Captcha Demo](static/img/17-1.png) 
 
 *(Ejemplo de imagen CAPTCHA)*
 
@@ -11,13 +11,15 @@ Aplicación web en **Flask** para generar CAPTCHAs basados en selección de imá
 - Pruebas de seguridad interactivas
 
 
+![Pantalla principal](static/img/18-2.png) 
+
 ##  Características principales
 | Sección | Función |
 |---------|---------|
-|  Constructor | Arma CAPTCHAs con imágenes segmentadas |
-|  Listado | Gestiona CAPTCHAs existentes (editar/eliminar) |
-|  Banco de imágenes | Visualiza imágenes disponibles (9 segmentos por imagen) |
-|  Validador | Prueba interactiva de CAPTCHAs generados |
+| S1 Constructor | Arma CAPTCHAs con imágenes segmentadas |
+| S2 Listado | Gestiona CAPTCHAs existentes (editar/eliminar) |
+| S3 Banco de imágenes | Visualiza imágenes disponibles (9 segmentos por imagen) |
+| S4 Validador | Prueba interactiva de CAPTCHAs generados |
 
 ##  Instalación
 
