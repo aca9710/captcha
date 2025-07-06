@@ -461,3 +461,29 @@ function enviasel() {
 function seleccionarImagen(elemento) {
     elemento.classList.toggle('seleccionada');
 };
+
+function borrar_lista_imagen(){
+    const seleccionadas = document.querySelectorAll('.celda-imagenl.seleccionada');
+
+};
+
+function allowDrop(ev) {
+    ev.preventDefault();
+};
+
+function droprejilla(ev){
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("id");
+    try{
+        src = document.getElementById(data).src;
+        ev.target.src = src;
+    }
+    catch{
+
+    };
+};
+
+
+function mydrag(event){
+    event.dataTransfer.setData("id", event.target.id);
+};

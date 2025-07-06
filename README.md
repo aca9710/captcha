@@ -4,11 +4,18 @@
 
 *(Ejemplo de imagen CAPTCHA)*
 
+
+
+
+
 ##  Descripción
 Aplicación web en **Flask** para generar CAPTCHAs basados en selección de imágenes. Ideal para:
 - Sistemas de autenticación
 - Protección contra bots
 - Pruebas de seguridad interactivas
+
+
+
 
 
 ##  Características principales
@@ -25,31 +32,57 @@ Aplicación web en **Flask** para generar CAPTCHAs basados en selección de imá
 
 
 
+
+
 ##  Usando la aplicación
 
 ![Mapa de funciones](static/img/18-3.png) 
 
-    1. Botón para validar el captcha
-    2. Copia las imágenes seleccionadas en la sección 3 hacia la sección 1
-    3. Borra las imágenes seleccionadas en la sección 3
-    4. Importar imágenes hacia la aplicación
-    5. Crear un captcha nuevo
-    6. Texto que nombra el objeto a identificar en el captcha
-    7. Nombre que aparece en el listado de la sección 2
-    8. Guarda el captcha
-    9. Borra un captcha de la aplicación
+![Mapa de funciones](static/img/1.png)
+ Botón para validar el captcha
+
+![Mapa de funciones](static/img/2.png) 
+Copia las imágenes seleccionadas en la sección 3 hacia la sección 1
+
+![Mapa de funciones](static/img/3.png) 
+Borra las imágenes seleccionadas en la sección 3
+
+![Mapa de funciones](static/img/4.png) 
+Importar imágenes hacia la aplicación
+
+![Mapa de funciones](static/img/5.png) 
+Crear un captcha nuevo
+
+![Mapa de funciones](static/img/6.png) 
+Texto que nombra el objeto a identificar en el captcha
+
+![Mapa de funciones](static/img/7.png) 
+Nombre que aparece en el listado de la sección 2
+
+![Mapa de funciones](static/img/8.png) 
+Guarda el captcha
+
+![Mapa de funciones](static/img/9.png) 
+Borra un captcha de la aplicación
+
+
+
+
 
 
 ##  Pasos para crear un nuevo captcha
 
     1.  (5) Crear un captcha nuevo
-    2.  Selecciona las imágenes en la sección 3 (2) Copia las imágenes seleccionadas hacia la sección 1
-    3.  (6) Cambiar el texto que nombra el objeto a identificar en el captcha
-    4.  Marcar las imágenes en la sección 1
-    5.  (8) Guarda el captcha
-    6.  Click encima de el nuevo captcha para que la sección 4 se actualice
-    7.  (1) Seleccionar las imágenes correctas en la sección 4 y hacer click 
+    2.  Selecciona las imágenes en la sección 3 
+    3.  (2) Copia las imágenes seleccionadas hacia la sección 1
+    4.  (6) Cambiar el texto que nombra el objeto a identificar en el captcha
+    5.  Marcar las imágenes en la sección 1
+    6.  (8) Guarda el captcha
+    7.  Click encima de el nuevo captcha para que la sección 4 se actualice
+    8.  (1) Seleccionar las imágenes correctas en la sección 4 y hacer click 
         en el botón para validar el captcha
+
+
 
 
 
@@ -64,6 +97,10 @@ Aplicación web en **Flask** para generar CAPTCHAs basados en selección de imá
     3. Ejecutar
     python3 captcha.py
 
+
+
+
+
 ##  Estructura de archivos
     .
     ├── captcha.py         # Aplicación principal
@@ -73,6 +110,10 @@ Aplicación web en **Flask** para generar CAPTCHAs basados en selección de imá
     │   └── log/           # Registros del sistema
     ├── templates/         # Vistas HTML
     └── listado.json       # Base de datos de CAPTCHAs
+
+
+
+
 
 ##  Entornos Virtuales (Recomendado)
     # 1. Crear entorno virtual (Python 3)
@@ -87,11 +128,16 @@ Aplicación web en **Flask** para generar CAPTCHAs basados en selección de imá
 
 
 
+
+
 ##  Endpoints clave
     HTTP GET  /                 → Interfaz de generación de captchas
 
     HTTP GET  /captcha          → Devuelve un CAPTCHA aleatorio
     HTTP POST /validar          → Valida la solución dada al CAPTCHA
+
+
+
 
 
 ##  Proceso de importación de imágenes

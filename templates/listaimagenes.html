@@ -1,132 +1,67 @@
-
 <div class="Table" id="rejilla1" style="width:303px !important; align-content: center; margin-top:6px;">
   {% for fila in rejilla %}
   <div class="fila-imagenes">
     {% for columna in fila %}
-    <div class="celda-imagenl" onclick="seleccionarImagen(this)" id="{{columna.id}}">
-      <img class="imagen-principal" name="mcuadro" src="{{ STATIC_URL}}captchas/{{columna.img}}"  >
-      <img class="imagen-superpuesta" src="{{ STATIC_URL }}img/ok.png" id="marca{{columna.id}}"  alt="Selección" name="selecimg">
+    <div class="celda-imagenl" onclick="seleccionarImagen(this)" id="{{columna.id}}"  draggable="true" ondragstart="mydrag(event)">
+      <img class="imagen-principal" name="mcuadro" src="{{ STATIC_URL}}captchas/{{columna.img}}" id="img{{columna.id}}" >
+      <img class="imagen-superpuesta" src="{{ STATIC_URL }}img/ok.png" id="marca{{columna.id}}" alt="Selección"
+        name="selecimg">
     </div>
     {% endfor %}
   </div>
   {% endfor %}
 </div>
-<div class="kkRow" style="display:flex; justify-content: center !important; margin-top: 12px;">
+<div style="display:flex; justify-content: center !important; margin-top: 12px;">
 
-<nav aria-label="">
-  <ul class="pagination">
-    <li class="page-item">
-      <a
-        {%
-        if
-        paginator.has_previous
-        %}
-        onclick="seccion('pag_im','/pag_im/?pag=1', 'listaimagenes');"
-        {%
-        else
-        %}
-        disabled
-        {%
-        endif
-        %}
-        class="page-link rounded-pill"
-      >
-        <img src="{{ STATIC_URL }}img/skip-start-fill.svg"
-      /></a>
-    </li>
-    <li class="page-item">
-      <a
-        {%
-        if
-        paginator.has_previous
-        %}
-        onclick="seccion('pag_im','/pag_im/?pag={{ paginator.previous_page_number }}', 'listaimagenes');"
-        {%
-        else
-        %}
-        disabled
-        {%
-        endif
-        %}
-        class="page-link rounded-pill"
-      >
-        <img src="{{ STATIC_URL }}img/caret-left-fill.svg"
-      /></a>
-    </li>
+  <nav aria-label>
+    <ul class="pagination">
+      <li class="page-item">
+        <a {% if paginator.has_previous %} onclick="seccion('pag_im','/pag_im/?pag=1', 'listaimagenes');" {% else %}
+          disabled {% endif %} class="page-link rounded-pill">
+          <img src="{{ STATIC_URL }}img/skip-start-fill.svg" /></a>
+      </li>
+      <li class="page-item">
+        <a {% if paginator.has_previous %}
+          onclick="seccion('pag_im','/pag_im/?pag={{ paginator.previous_page_number }}', 'listaimagenes');" {% else %}
+          disabled {% endif %} class="page-link rounded-pill">
+          <img src="{{ STATIC_URL }}img/caret-left-fill.svg" /></a>
+      </li>
 
-    <li class="page-item">
-      <a
-        class="page-link rounded-pill"
-        {%
-        if
-        paginator.has_next
-        %}
-        onclick="seccion('pag_im','/pag_im/?pag={{ paginator.next_page_number }}', 'listaimagenes');"
-        {%
-        else
-        %}
-        disabled
-        {%
-        endif
-        %}
-      >
-        <img src="{{ STATIC_URL }}img/caret-right-fill.svg"
-      /></a>
-    </li>
-    <li class="page-item">
-      <a
-        class="page-link rounded-pill"
-        {%
-        if
-        paginator.has_next
-        %}
-        onclick="seccion('pag_im','/pag_im/?pag={{ paginator.num_pages }}', 'listaimagenes');"
-        {%
-        else
-        %}
-        disabled
-        {%
-        endif
-        %}
-      >
-        <img src="{{ STATIC_URL }}img/skip-end-fill.svg"
-      /></a>
-    </li>
+      <li class="page-item">
+        <a class="page-link rounded-pill" {% if paginator.has_next %}
+          onclick="seccion('pag_im','/pag_im/?pag={{ paginator.next_page_number }}', 'listaimagenes');" {% else %}
+          disabled {% endif %}>
+          <img src="{{ STATIC_URL }}img/caret-right-fill.svg" /></a>
+      </li>
+      <li class="page-item">
+        <a class="page-link rounded-pill" {% if paginator.has_next %}
+          onclick="seccion('pag_im','/pag_im/?pag={{ paginator.num_pages }}', 'listaimagenes');" {% else %} disabled {%
+          endif %}>
+          <img src="{{ STATIC_URL }}img/skip-end-fill.svg" /></a>
+      </li>
 
-    <li hidden class="page-item disabled">
-      <a
-        id="paginaactual"
-        class="page-link rounded-pill"
-        href="/{{ nomenclador }}/?pag={{ paginator.num_pages }}"
-        >pag. {{ paginator.number }} de {{ paginator.num_pages }}</a
-      >
-    </li>
-    <li class="page-item" {% if paginator.num_pages == 0 %} style="background-color: red;"{% endif %}>
-      <label class="custom-file-upload page-link rounded-pill">
-        <input
-          type="file"
-          onchange="importarimagen('fileSubmission', '{{pag}}');"
-          id="fileSubmission"
-          multiple
-          accept="image/x-png,image/gif,image/jpeg"
-        />
-        &nbsp;+&nbsp;
-      </label>
-    </li>
-    <li class="page-item">
-      <a class="page-link rounded-pill" onclick="borrar();">
-        <img src="{{ STATIC_URL }}img/trash-fill.svg"
-      /></a>
-    </li>
-    &nbsp;
-    <li class="page-item">
-      <a class="page-link rounded-pill" onclick="mover9();">
-        <img src="{{ STATIC_URL }}img/box-arrow-in-left.svg"
-      /></a>
-    </li>
-  </ul>
-</nav>
+      <li hidden class="page-item disabled">
+        <a id="paginaactual" class="page-link rounded-pill"
+          href="/{{ nomenclador }}/?pag={{ paginator.num_pages }}">pag. {{
+          paginator.number }} de {{ paginator.num_pages }}</a>
+      </li>
+      <li class="page-item" {% if paginator.num_pages==0 %} style="background-color: red;" {% endif %}>
+        <label class="custom-file-upload page-link rounded-pill">
+          <input type="file" onchange="importarimagen('fileSubmission', '{{pag}}');" id="fileSubmission" multiple
+            accept="image/x-png,image/gif,image/jpeg" />
+          &nbsp;+&nbsp;
+        </label>
+      </li>
+      <li class="page-item">
+        <a class="page-link rounded-pill" onclick="borrar_lista_imagen();">
+          <img src="{{ STATIC_URL }}img/trash-fill.svg" /></a>
+      </li>
+      &nbsp;
+      <li class="page-item">
+        <a class="page-link rounded-pill" onclick="mover9();">
+          <img src="{{ STATIC_URL }}img/box-arrow-in-left.svg" /></a>
+      </li>
+    </ul>
+  </nav>
 
 </div>
-
-

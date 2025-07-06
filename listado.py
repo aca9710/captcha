@@ -26,7 +26,18 @@ class Listado():
 
         self._listaid = []
         for id in self._listado:
-            self._listaid.append(id)    
+            self._listaid.append(id)  
+
+        self._usoimagen = {}   
+        mapa = self.mapa_id()
+        for id in self._listado:
+            for posicion in mapa:
+                imagen = self._listado[id][posicion]
+                if imagen not in self._usoimagen:
+                    self._usoimagen[imagen] = []
+                self._usoimagen[imagen].append(id)     
+
+
         
 
     def existeid(self, id):
@@ -91,7 +102,18 @@ class Listado():
         contador = 0 
         for item in nodos:
             # imagen = item.split('/')[-1].split('?')[0]
+            img_anterior = self._listado[id][_lista[contador]]
             self._listado[id][_lista[contador]] = item
+
+            if item not in self._usoimagen:
+                self._usoimagen[item] = []
+            
+            if img_anterior in self._usoimagen:
+                lista = self._usoimagen[img_anterior]
+                posicion = lista.index(id)
+                self._usoimagen[img_anterior].pop(posicion)
+            self._usoimagen[item].append(id)
+
             contador += 1
 
         self.guardar()    

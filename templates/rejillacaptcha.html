@@ -5,7 +5,8 @@
     {% for fila in rejilla%}
     <div class="fila-imagenes">
         {% for columna in fila %}
-        <div class="celda-imagenr {% if columna.id in seleccionado %} seleccionada {% endif %}" onclick="seleccionarImagen(this);" id="{{columna.id}}" name="edest">
+        <div class="celda-imagenr {% if columna.id in seleccionado %} seleccionada {% endif %}" onclick="seleccionarImagen(this);" id="{{columna.id}}" name="edest"
+        ondrop="droprejilla(event);" ondragover="allowDrop(event)">
             <img class="imagen-principal" name="cuadro" src="{{columna.img}}" id="{{columna.id}}" >
             <img class="imagen-superpuesta" src="{{ STATIC_URL }}img/ok.png" id="marca{{columna.id}}"  alt="Selección">
             
